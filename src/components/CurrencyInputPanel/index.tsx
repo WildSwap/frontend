@@ -60,7 +60,7 @@ const Aligner = styled.span`
   justify-content: space-between;
 `
 
-const InputPanel = styled.div<{ hideInput?: boolean }>`
+const InputPanel = styled.div<{ hideInput: boolean }>`
   display: flex;
   flex-flow: column nowrap;
   position: relative;
@@ -78,18 +78,18 @@ const Container = styled.div<{ hideInput: boolean }>`
 interface CurrencyInputPanelProps {
   value: string
   onUserInput: (value: string) => void
-  onMax?: () => void
+  onMax: () => void
   showMaxButton: boolean
-  label?: string
-  onCurrencySelect?: (currency: Currency) => void
-  currency?: Currency | null
-  disableCurrencySelect?: boolean
-  hideBalance?: boolean
-  pair?: Pair | null
-  hideInput?: boolean
-  otherCurrency?: Currency | null
+  label: string
+  onCurrencySelect: (currency: Currency) => void
+  currency: Currency | null
+  disableCurrencySelect: boolean
+  hideBalance: boolean
+  pair: Pair | null
+  hideInput: boolean
+  otherCurrency: Currency | null
   id: string
-  showCommonBases?: boolean
+  showCommonBases: boolean
 }
 
 export default function CurrencyInputPanel({
@@ -110,7 +110,7 @@ export default function CurrencyInputPanel({
 }: CurrencyInputPanelProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const { account } = useActiveWeb3React()
-  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const selectedCurrencyBalance = useCurrencyBalance(account undefined, currency ?? undefined)
 
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
@@ -126,14 +126,14 @@ export default function CurrencyInputPanel({
               {account && (
                 <Text onClick={onMax} fontSize="14px" style={{ display: 'inline', cursor: 'pointer' }}>
                   {!hideBalance && !!currency && selectedCurrencyBalance
-                    ? `Balance: ${  selectedCurrencyBalance?.toSignificant(6)}`
+                     `Balance: ${  selectedCurrencyBalance?.toSignificant(6)}`
                     : ' -'}
                 </Text>
               )}
             </RowBetween>
           </LabelRow>
         )}
-        <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={disableCurrencySelect}>
+        <InputRow style={hideInput { padding: '0', borderRadius: '8px' } : {}} selected={disableCurrencySelect}>
           {!hideInput && (
             <>
               <NumericalInput
@@ -167,7 +167,7 @@ export default function CurrencyInputPanel({
               ) : null}
               {pair ? (
                 <Text>
-                  {pair?.token0.symbol}:{pair?.token1.symbol}
+                  {pair.token0.symbol}:{pair.token1.symbol}
                 </Text>
               ) : (
                 <Text>
@@ -175,7 +175,7 @@ export default function CurrencyInputPanel({
                     ? `${currency.symbol.slice(0, 4) 
                       }...${ 
                       currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)}`
-                    : currency?.symbol) || <TranslatedText translationId={82}>Select a currency</TranslatedText>}
+                    : currency.symbol) || <TranslatedText translationId={82}>Select a currency</TranslatedText>}
                 </Text>
               )}
               {!disableCurrencySelect && <ChevronDownIcon />}
