@@ -23,45 +23,45 @@ export function useDerivedMintInfo(
   currencyB: Currency | undefined
 ): {
   dependentField: Field
-  currencies: { [field in Field]?: Currency }
-  pair?: Pair | null
+  currencies: { [field in Field]: Currency }
+  pair: Pair | null
   pairState: PairState
-  currencyBalances: { [field in Field]?: CurrencyAmount }
-  parsedAmounts: { [field in Field]?: CurrencyAmount }
-  price?: Price
-  noLiquidity?: boolean
-  liquidityMinted?: TokenAmount
-  poolTokenPercentage?: Percent
-  error?: string
+  currencyBalances: { [field in Field]: CurrencyAmount }
+  parsedAmounts: { [field in Field]: CurrencyAmount }
+  price: Price
+  noLiquidity: boolean
+  liquidityMinted: TokenAmount
+  poolTokenPercentage: Percent
+  error: string
 } {
   const { account, chainId } = useActiveWeb3React()
 
   const { independentField, typedValue, otherTypedValue } = useMintState()
 
-  const dependentField = independentField === Field.CURRENCY_A ? Field.CURRENCY_B : Field.CURRENCY_A
+  const dependentField = independentField === Field.CURRENCY_A  Field.CURRENCY_B : Field.CURRENCY_A
 
   // tokens
-  const currencies: { [field in Field]?: Currency } = useMemo(
+  const currencies: { [field in Field]: Currency } = useMemo(
     () => ({
-      [Field.CURRENCY_A]: currencyA ?? undefined,
-      [Field.CURRENCY_B]: currencyB ?? undefined,
+      [Field.CURRENCY_A]: currencyA  undefined,
+      [Field.CURRENCY_B]: currencyB  undefined,
     }),
     [currencyA, currencyB]
   )
 
   // pair
   const [pairState, pair] = usePair(currencies[Field.CURRENCY_A], currencies[Field.CURRENCY_B])
-  const totalSupply = useTotalSupply(pair?.liquidityToken)
+  const totalSupply = useTotalSupply(pair.liquidityToken)
 
   const noLiquidity: boolean =
     pairState === PairState.NOT_EXISTS || Boolean(totalSupply && JSBI.equal(totalSupply.raw, ZERO))
 
   // balances
-  const balances = useCurrencyBalances(account ?? undefined, [
+  const balances = useCurrencyBalances(account  undefined, [
     currencies[Field.CURRENCY_A],
     currencies[Field.CURRENCY_B],
   ])
-  const currencyBalances: { [field in Field]?: CurrencyAmount } = {
+  const currencyBalances: { [field in Field]: CurrencyAmount } = {
     [Field.CURRENCY_A]: balances[0],
     [Field.CURRENCY_B]: balances[1],
   }
@@ -80,12 +80,12 @@ export function useDerivedMintInfo(
       const wrappedIndependentAmount = wrappedCurrencyAmount(independentAmount, chainId)
       const [tokenA, tokenB] = [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)]
       if (tokenA && tokenB && wrappedIndependentAmount && pair) {
-        const dependentCurrency = dependentField === Field.CURRENCY_B ? currencyB : currencyA
+        const dependentCurrency = dependentField === Field.CURRENCY_B  currencyB : currencyA
         const dependentTokenAmount =
           dependentField === Field.CURRENCY_B
-            ? pair.priceOf(tokenA).quote(wrappedIndependentAmount)
+             pair.priceOf(tokenA).quote(wrappedIndependentAmount)
             : pair.priceOf(tokenB).quote(wrappedIndependentAmount)
-        return dependentCurrency === ETHER ? CurrencyAmount.ether(dependentTokenAmount.raw) : dependentTokenAmount
+        return dependentCurrency === ETHER  CurrencyAmount.ether(dependentTokenAmount.raw) : dependentTokenAmount
       }
       return undefined
     }
@@ -93,8 +93,8 @@ export function useDerivedMintInfo(
   }, [noLiquidity, otherTypedValue, currencies, dependentField, independentAmount, currencyA, chainId, currencyB, pair])
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const parsedAmounts: { [field in Field]: CurrencyAmount | undefined } = {
-    [Field.CURRENCY_A]: independentField === Field.CURRENCY_A ? independentAmount : dependentAmount,
-    [Field.CURRENCY_B]: independentField === Field.CURRENCY_A ? dependentAmount : independentAmount,
+    [Field.CURRENCY_A]: independentField === Field.CURRENCY_A  independentAmount : dependentAmount,
+    [Field.CURRENCY_B]: independentField === Field.CURRENCY_A  dependentAmount : independentAmount,
   }
 
   const price = useMemo(() => {
@@ -106,7 +106,7 @@ export function useDerivedMintInfo(
       return undefined
     }
     const wrappedCurrencyA = wrappedCurrency(currencyA, chainId)
-    return pair && wrappedCurrencyA ? pair.priceOf(wrappedCurrencyA) : undefined
+    return pair && wrappedCurrencyA  pair.priceOf(wrappedCurrencyA) : undefined
   }, [chainId, currencyA, noLiquidity, pair, parsedAmounts])
 
   // liquidity minted
@@ -135,21 +135,21 @@ export function useDerivedMintInfo(
   }
 
   if (pairState === PairState.INVALID) {
-    error = error ?? TranslateString(136, 'Invalid pair')
+    error = error  TranslateString(136, 'Invalid pair')
   }
 
   if (!parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
-    error = error ?? TranslateString(84, 'Enter an amount')
+    error = error  TranslateString(84, 'Enter an amount')
   }
 
   const { [Field.CURRENCY_A]: currencyAAmount, [Field.CURRENCY_B]: currencyBAmount } = parsedAmounts
 
-  if (currencyAAmount && currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)) {
-    error = `Insufficient ${currencies[Field.CURRENCY_A]?.symbol} balance`
+  if (currencyAAmount && currencyBalances.[Field.CURRENCY_A].lessThan(currencyAAmount)) {
+    error = `Insufficient ${currencies[Field.CURRENCY_A].symbol} balance`
   }
 
-  if (currencyBAmount && currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)) {
-    error = `Insufficient ${currencies[Field.CURRENCY_B]?.symbol} balance`
+  if (currencyBAmount && currencyBalances.[Field.CURRENCY_B].lessThan(currencyBAmount)) {
+    error = `Insufficient ${currencies[Field.CURRENCY_B].symbol} balance`
   }
 
   return {
