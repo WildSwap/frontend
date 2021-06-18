@@ -21,7 +21,7 @@ function useContract(address: string | undefined, ABI: any, withSignerIfPossible
   return useMemo(() => {
     if (!address || !ABI || !library) return null
     try {
-      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+      return getContract(address, ABI, library, withSignerIfPossible && account  account : undefined)
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
@@ -38,20 +38,20 @@ export function useV2MigratorContract(): Contract | null {
   return useContract(MIGRATOR_ADDRESS, MIGRATOR_ABI, true)
 }
 
-export function useV1ExchangeContract(address?: string, withSignerIfPossible?: boolean): Contract | null {
+export function useV1ExchangeContract(address: string, withSignerIfPossible: boolean): Contract | null {
   return useContract(address, V1_EXCHANGE_ABI, withSignerIfPossible)
 }
 
-export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+export function useTokenContract(tokenAddress: string, withSignerIfPossible: boolean): Contract | null {
   return useContract(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }
 
-export function useWETHContract(withSignerIfPossible?: boolean): Contract | null {
+export function useWETHContract(withSignerIfPossible: boolean): Contract | null {
   const { chainId } = useActiveWeb3React()
-  return useContract(chainId ? WETH[chainId].address : undefined, WETH_ABI, withSignerIfPossible)
+  return useContract(chainId  WETH[chainId].address : undefined, WETH_ABI, withSignerIfPossible)
 }
 
-export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contract | null {
+export function useENSRegistrarContract(withSignerIfPossible: boolean): Contract | null {
   const { chainId } = useActiveWeb3React()
   let address: string | undefined
   if (chainId) {
@@ -63,15 +63,15 @@ export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contrac
   return useContract(address, ENS_ABI, withSignerIfPossible)
 }
 
-export function useENSResolverContract(address: string | undefined, withSignerIfPossible?: boolean): Contract | null {
+export function useENSResolverContract(address: string | undefined, withSignerIfPossible: boolean): Contract | null {
   return useContract(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
 }
 
-export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+export function useBytes32TokenContract(tokenAddress: string, withSignerIfPossible: boolean): Contract | null {
   return useContract(tokenAddress, ERC20_BYTES32_ABI, withSignerIfPossible)
 }
 
-export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+export function usePairContract(pairAddress: string, withSignerIfPossible: boolean): Contract | null {
   return useContract(pairAddress, IUniswapV2PairABI, withSignerIfPossible)
 }
 
@@ -83,7 +83,7 @@ export function useMulticallContract(): Contract | null {
 export function useSocksController(): Contract | null {
   const { chainId } = useActiveWeb3React()
   return useContract(
-    chainId === ChainId.MAINNET ? '0x65770b5283117639760beA3F867b69b3697a91dd' : undefined,
+    chainId === ChainId.MAINNET  '0x65770b5283117639760beA3F867b69b3697a91dd' : undefined,
     UNISOCKS_ABI,
     false
   )
