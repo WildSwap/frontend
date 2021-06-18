@@ -73,7 +73,7 @@ export default function AddressInputPanel({
   value,
   onChange,
 }: {
-  id?: string
+  id: string
   // the typed string value
   value: string
   // triggers whenever the typed value changes
