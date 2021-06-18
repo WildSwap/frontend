@@ -35,7 +35,7 @@ const InputContainer = styled.div`
   padding: 1rem;
 `
 
-const Input = styled.input<{ error?: boolean }>`
+const Input = styled.input<{ error: boolean }>`
   font-size: 1.25rem;
   outline: none;
   border: none;
