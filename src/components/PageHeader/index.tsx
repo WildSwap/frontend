@@ -6,8 +6,8 @@ import RecentTransactionsModal from './RecentTransactionsModal'
 
 interface PageHeaderProps {
   title: ReactNode
-  description?: ReactNode
-  children?: ReactNode
+  description: ReactNode
+  children: ReactNode
 }
 
 // TODO: use UI Kit
