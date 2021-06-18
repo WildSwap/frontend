@@ -4,20 +4,20 @@ import invariant from 'tiny-invariant'
 
 interface NetworkConnectorArguments {
   urls: { [chainId: number]: string }
-  defaultChainId?: number
+  defaultChainId: number
 }
 
 // taken from ethers.js, compatible interface with web3 provider
 type AsyncSendable = {
-  isMetaMask?: boolean
-  host?: string
-  path?: string
-  sendAsync?: (request: any, callback: (error: any, response: any) => void) => void
-  send?: (request: any, callback: (error: any, response: any) => void) => void
+  isMetaMask: boolean
+  host: string
+  path: string
+  sendAsync: (request: any, callback: (error: any, response: any) => void) => void
+  send: (request: any, callback: (error: any, response: any) => void) => void
 }
 
 class RequestError extends Error {
-  constructor(message: string, public code: number, public data?: unknown) {
+  constructor(message: string, public code: number, public data: unknown) {
     super(message)
   }
 }
@@ -47,14 +47,14 @@ class MiniRpcProvider implements AsyncSendable {
 
   private batch: BatchItem[] = []
 
-  constructor(chainId: number, url: string, batchWaitTimeMs?: number) {
+  constructor(chainId: number, url: string, batchWaitTimeMs: number) {
     this.chainId = chainId
     this.url = url
     const parsed = new URL(url)
     this.host = parsed.host
     this.path = parsed.pathname
     // how long to wait to batch calls
-    this.batchWaitTimeMs = batchWaitTimeMs ?? 50
+    this.batchWaitTimeMs = batchWaitTimeMs  50
   }
 
   public readonly clearBatch = async () => {
@@ -99,7 +99,7 @@ class MiniRpcProvider implements AsyncSendable {
       } = byKey[result.id]
       if (resolve && reject) {
         if ('error' in result) {
-          reject(new RequestError(result?.error?.message, result?.error?.code, result?.error?.data))
+          reject(new RequestError(result.error.message, result.error.code, result.error.data))
         } else if ('result' in result) {
           resolve(result.result)
         } else {
@@ -110,7 +110,7 @@ class MiniRpcProvider implements AsyncSendable {
   }
 
   public readonly sendAsync = (
-    request: { jsonrpc: '2.0'; id: number | string | null; method: string; params?: any },
+    request: { jsonrpc: '2.0'; id: number | string | null; method: string; params: any },
     callback: (error: any, response: any) => void
   ): void => {
     this.request(request.method, request.params)
@@ -120,7 +120,7 @@ class MiniRpcProvider implements AsyncSendable {
 
   public readonly request = async (
     method: string | { method: string; params: unknown[] },
-    params?: any
+    params: any
   ): Promise<unknown> => {
     if (typeof method !== 'string') {
       return this.request(method.method, method.params)
@@ -140,7 +140,7 @@ class MiniRpcProvider implements AsyncSendable {
         reject,
       })
     })
-    this.batchTimeoutId = this.batchTimeoutId ?? setTimeout(this.clearBatch, this.batchWaitTimeMs)
+    this.batchTimeoutId = this.batchTimeoutId  setTimeout(this.clearBatch, this.batchWaitTimeMs)
     return promise
   }
 }
