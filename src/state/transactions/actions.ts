@@ -9,15 +9,15 @@ export interface SerializableTransactionReceipt {
   blockHash: string
   transactionHash: string
   blockNumber: number
-  status?: number
+  status: number
 }
 
 export const addTransaction = createAction<{
   chainId: ChainId
   hash: string
   from: string
-  approval?: { tokenAddress: string; spender: string }
-  summary?: string
+  approval: { tokenAddress: string; spender: string }
+  summary: string
 }>('transactions/addTransaction')
 export const clearAllTransactions = createAction<{ chainId: ChainId }>('transactions/clearAllTransactions')
 export const finalizeTransaction = createAction<{
