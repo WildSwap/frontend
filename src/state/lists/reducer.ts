@@ -17,7 +17,7 @@ export interface ListsState {
     }
   }
   // this contains the default list of lists from the last time the updateVersion was called, i.e. the app was reloaded
-  readonly lastInitializedDefaultListOfLists?: string[]
+  readonly lastInitializedDefaultListOfLists: string[]
   readonly selectedListUrl: string | undefined
 }
 
@@ -28,7 +28,7 @@ const NEW_LIST_STATE: ListsState['byUrl'][string] = {
   pendingUpdate: null,
 }
 
-type Mutable<T> = { -readonly [P in keyof T]: T[P] extends ReadonlyArray<infer U> ? U[] : T[P] }
+type Mutable<T> = { -readonly [P in keyof T]: T[P] extends ReadonlyArray<infer U>  U[] : T[P] }
 
 const initialState: ListsState = {
   lastInitializedDefaultListOfLists: DEFAULT_LIST_OF_LISTS,
@@ -59,8 +59,8 @@ export default createReducer(initialState, (builder) =>
       }
     })
     .addCase(fetchTokenList.fulfilled, (state, { payload: { requestId, tokenList, url } }) => {
-      const current = state.byUrl[url]?.current
-      const loadingRequestId = state.byUrl[url]?.loadingRequestId
+      const current = state.byUrl[url].current
+      const loadingRequestId = state.byUrl[url].loadingRequestId
 
       // no-op if update does nothing
       if (current) {
@@ -86,7 +86,7 @@ export default createReducer(initialState, (builder) =>
       }
     })
     .addCase(fetchTokenList.rejected, (state, { payload: { url, requestId, errorMessage } }) => {
-      if (state.byUrl[url]?.loadingRequestId !== requestId) {
+      if (state.byUrl[url].loadingRequestId !== requestId) {
         // no-op since it's not the latest request
         return
       }
@@ -120,7 +120,7 @@ export default createReducer(initialState, (builder) =>
       }
     })
     .addCase(acceptListUpdate, (state, { payload: url }) => {
-      if (!state.byUrl[url]?.pendingUpdate) {
+      if (!state.byUrl[url].pendingUpdate) {
         throw new Error('accept list update called without pending update')
       }
       state.byUrl[url] = {
