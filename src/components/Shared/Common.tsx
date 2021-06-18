@@ -5,7 +5,7 @@ import { darken } from 'polished'
 import { ArrowLeft, X } from 'react-feather'
 
 export const Button = styled.button.attrs<{ warning: boolean }, { backgroundColor: string }>(({ warning, theme }) => ({
-  backgroundColor: warning ? theme.colors.failure : theme.colors.primary
+  backgroundColor: warning  theme.colors.failure : theme.colors.primary
 }))`
   padding: 1rem 2rem 1rem 2rem;
   border-radius: 3rem;
@@ -38,22 +38,22 @@ export const CloseIcon = styled(X)<{ onClick: () => void }>`
 `
 
 // A button that triggers some onClick result, but looks like a link.
-export const LinkStyledButton = styled.button<{ disabled?: boolean }>`
+export const LinkStyledButton = styled.button<{ disabled: boolean }>`
   border: none;
   text-decoration: none;
   background: none;
 
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  color: ${({ theme, disabled }) => (disabled ? theme.colors.textSubtle : theme.colors.primary)};
+  cursor: ${({ disabled }) => (disabled  'default' : 'pointer')};
+  color: ${({ theme, disabled }) => (disabled  theme.colors.textSubtle : theme.colors.primary)};
   font-weight: 500;
 
   :hover {
-    text-decoration: ${({ disabled }) => (disabled ? null : 'underline')};
+    text-decoration: ${({ disabled }) => (disabled  null : 'underline')};
   }
 
   :focus {
     outline: none;
-    text-decoration: ${({ disabled }) => (disabled ? null : 'underline')};
+    text-decoration: ${({ disabled }) => (disabled  null : 'underline')};
   }
 
   :active {
