@@ -38,7 +38,7 @@ export default function Pool() {
     tokenPairsWithLiquidityTokens,
   ])
   const [v2PairsBalances, fetchingV2PairBalances] = useTokenBalancesWithLoadingIndicator(
-    account ?? undefined,
+    account  undefined,
     liquidityTokens
   )
 
@@ -46,14 +46,14 @@ export default function Pool() {
   const liquidityTokensWithBalances = useMemo(
     () =>
       tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>
-        v2PairsBalances[liquidityToken.address]?.greaterThan('0')
+        v2PairsBalances[liquidityToken.address].greaterThan('0')
       ),
     [tokenPairsWithLiquidityTokens, v2PairsBalances]
   )
 
   const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
   const v2IsLoading =
-    fetchingV2PairBalances || v2Pairs?.length < liquidityTokensWithBalances.length || v2Pairs?.some((V2Pair) => !V2Pair)
+    fetchingV2PairBalances || v2Pairs.length < liquidityTokensWithBalances.length || v2Pairs.some((V2Pair) => !V2Pair)
 
   const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter((v2Pair): v2Pair is Pair => Boolean(v2Pair))
 
@@ -83,19 +83,19 @@ export default function Pool() {
                 />
               </RowBetween>
 
-              {!account ? (
+              {!account  (
                 <LightCard padding="40px">
                   <Body color={theme.colors.textDisabled} textAlign="center">
                     Connect to a wallet to view your liquidity.
                   </Body>
                 </LightCard>
-              ) : v2IsLoading ? (
+              ) : v2IsLoading  (
                 <LightCard padding="40px">
                   <Body color={theme.colors.textDisabled} textAlign="center">
                     <Dots>Loading</Dots>
                   </Body>
                 </LightCard>
-              ) : allV2PairsWithLiquidity?.length > 0 ? (
+              ) : allV2PairsWithLiquidity.length > 0  (
                 <>
                   {allV2PairsWithLiquidity.map((v2Pair) => (
                     <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
@@ -112,10 +112,10 @@ export default function Pool() {
               <div>
                 <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
                   {hasV1Liquidity
-                    ? 'Uniswap V1 liquidity found!'
+                     'Uniswap V1 liquidity found!'
                     : TranslateString(106, "Don't see a pool you joined?")}{' '}
-                  <StyledInternalLink id="import-pool-link" to={hasV1Liquidity ? '/migrate/v1' : '/find'}>
-                    {hasV1Liquidity ? 'Migrate now.' : TranslateString(108, 'Import it.')}
+                  <StyledInternalLink id="import-pool-link" to={hasV1Liquidity  '/migrate/v1' : '/find'}>
+                    {hasV1Liquidity  'Migrate now.' : TranslateString(108, 'Import it.')}
                   </StyledInternalLink>
                 </Text>
                 <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
