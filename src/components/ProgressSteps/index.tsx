@@ -12,11 +12,11 @@ const Grouping = styled(RowBetween)`
   width: 50%;
 `
 
-const Circle = styled.div<{ confirmed?: boolean; disabled?: boolean }>`
+const Circle = styled.div<{ confirmed: boolean; disabled: boolean }>`
   min-width: 20px;
   min-height: 20px;
   background-color: ${({ theme, confirmed, disabled }) =>
-    disabled ? theme.colors.backgroundDisabled : confirmed ? theme.colors.success : theme.colors.primary};
+    disabled  theme.colors.backgroundDisabled : confirmed  theme.colors.success : theme.colors.primary};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -24,7 +24,7 @@ const Circle = styled.div<{ confirmed?: boolean; disabled?: boolean }>`
   line-height: 8px;
   font-size: 12px;
   color: ${({ theme, confirmed, disabled }) =>
-    disabled ? theme.colors.text : confirmed ? theme.colors.success : '#FFFFFF'};
+    disabled  theme.colors.text : confirmed  theme.colors.success : '#FFFFFF'};
 `
 
 const CircleRow = styled.div`
@@ -33,14 +33,14 @@ const CircleRow = styled.div`
   align-items: center;
 `
 
-const Connector = styled.div<{ prevConfirmed?: boolean }>`
+const Connector = styled.div<{ prevConfirmed: boolean }>`
   width: 100%;
   height: 2px;
   background-color: ;
   background: linear-gradient(
     90deg,
-    ${({ theme, prevConfirmed }) => transparentize(0.5, prevConfirmed ? theme.colors.success : theme.colors.primary)} 0%,
-    ${({ theme, prevConfirmed }) => (prevConfirmed ? theme.colors.primary : theme.colors.backgroundDisabled)} 80%
+    ${({ theme, prevConfirmed }) => transparentize(0.5, prevConfirmed  theme.colors.success : theme.colors.primary)} 0%,
+    ${({ theme, prevConfirmed }) => (prevConfirmed  theme.colors.primary : theme.colors.backgroundDisabled)} 80%
   );
   opacity: 0.6;
 `
