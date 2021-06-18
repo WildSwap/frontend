@@ -52,7 +52,7 @@ function useSwapCallArguments(
   const { account, chainId, library } = useActiveWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
-  const recipient = recipientAddressOrName === null ? account : recipientAddress
+  const recipient = recipientAddressOrName === null  account : recipientAddress
 
   const v1Exchange = useV1ExchangeContract(useV1TradeExchangeAddress(trade), true)
 
@@ -61,7 +61,7 @@ function useSwapCallArguments(
     if (!trade || !recipient || !library || !account || !tradeVersion || !chainId) return []
 
     const contract: Contract | null =
-      tradeVersion === Version.v2 ? getRouterContract(chainId, library, account) : v1Exchange
+      tradeVersion === Version.v2  getRouterContract(chainId, library, account) : v1Exchange
     if (!contract) {
       return []
     }
@@ -122,7 +122,7 @@ export function useSwapCallback(
   const addTransaction = useTransactionAdder()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
-  const recipient = recipientAddressOrName === null ? account : recipientAddress
+  const recipient = recipientAddressOrName === null  account : recipientAddress
 
   return useMemo(() => {
     if (!trade || !library || !account || !chainId) {
@@ -146,7 +146,7 @@ export function useSwapCallback(
               parameters: { methodName, args, value },
               contract,
             } = call
-            const options = !value || isZero(value) ? {} : { value }
+            const options = !value || isZero(value)  {} : { value }
 
             return contract.estimateGas[methodName](...args, options)
               .then((gasEstimate) => {
@@ -203,7 +203,7 @@ export function useSwapCallback(
 
         return contract[methodName](...args, {
           gasLimit: calculateGasMargin(gasEstimate),
-          ...(value && !isZero(value) ? { value, from: account } : { from: account }),
+          ...(value && !isZero(value)  { value, from: account } : { from: account }),
         })
           .then((response: any) => {
             const inputSymbol = trade.inputAmount.currency.symbol
@@ -214,15 +214,15 @@ export function useSwapCallback(
             const base = `Swap ${inputAmount} ${inputSymbol} for ${outputAmount} ${outputSymbol}`
             const withRecipient =
               recipient === account
-                ? base
+                 base
                 : `${base} to ${
                     recipientAddressOrName && isAddress(recipientAddressOrName)
-                      ? shortenAddress(recipientAddressOrName)
+                       shortenAddress(recipientAddressOrName)
                       : recipientAddressOrName
                   }`
 
             const withVersion =
-              tradeVersion === Version.v2 ? withRecipient : `${withRecipient} on ${(tradeVersion as any).toUpperCase()}`
+              tradeVersion === Version.v2  withRecipient : `${withRecipient} on ${(tradeVersion as any).toUpperCase()}`
 
             addTransaction(response, {
               summary: withVersion,
