@@ -35,7 +35,7 @@ export function useSwapActionHandlers(): {
       dispatch(
         selectCurrency({
           field,
-          currencyId: currency instanceof Token ? currency.address : currency === ETHER ? 'ETH' : '',
+          currencyId: currency instanceof Token  currency.address : currency === ETHER  'ETH' : '',
         })
       )
     },
@@ -69,7 +69,7 @@ export function useSwapActionHandlers(): {
 }
 
 // try to parse a user entered amount for a given token
-export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmount | undefined {
+export function tryParseAmount(value: string, currency: Currency): CurrencyAmount | undefined {
   if (!value || !currency) {
     return undefined
   }
@@ -77,7 +77,7 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
     const typedValueParsed = parseUnits(value, currency.decimals).toString()
     if (typedValueParsed !== '0') {
       return currency instanceof Token
-        ? new TokenAmount(currency, JSBI.BigInt(typedValueParsed))
+         new TokenAmount(currency, JSBI.BigInt(typedValueParsed))
         : CurrencyAmount.ether(JSBI.BigInt(typedValueParsed))
     }
   } catch (error) {
@@ -108,11 +108,11 @@ function involvesAddress(trade: Trade, checksummedAddress: string): boolean {
 
 // from the current swap inputs, compute the best trade and return it.
 export function useDerivedSwapInfo(): {
-  currencies: { [field in Field]?: Currency }
-  currencyBalances: { [field in Field]?: CurrencyAmount }
+  currencies: { [field in Field]: Currency }
+  currencyBalances: { [field in Field]: CurrencyAmount }
   parsedAmount: CurrencyAmount | undefined
   v2Trade: Trade | undefined
-  inputError?: string
+  inputError: string
   v1Trade: Trade | undefined
 } {
   const { account } = useActiveWeb3React()
@@ -129,30 +129,30 @@ export function useDerivedSwapInfo(): {
 
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
-  const recipientLookup = useENS(recipient ?? undefined)
-  const to: string | null = (recipient === null ? account : recipientLookup.address) ?? null
+  const recipientLookup = useENS(recipient  undefined)
+  const to: string | null = (recipient === null  account : recipientLookup.address)  null
 
-  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
-    inputCurrency ?? undefined,
-    outputCurrency ?? undefined,
+  const relevantTokenBalances = useCurrencyBalances(account  undefined, [
+    inputCurrency  undefined,
+    outputCurrency  undefined,
   ])
 
   const isExactIn: boolean = independentField === Field.INPUT
-  const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
+  const parsedAmount = tryParseAmount(typedValue, (isExactIn  inputCurrency : outputCurrency)  undefined)
 
-  const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
-  const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
+  const bestTradeExactIn = useTradeExactIn(isExactIn  parsedAmount : undefined, outputCurrency  undefined)
+  const bestTradeExactOut = useTradeExactOut(inputCurrency  undefined, !isExactIn  parsedAmount : undefined)
 
-  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
+  const v2Trade = isExactIn  bestTradeExactIn : bestTradeExactOut
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
   }
 
-  const currencies: { [field in Field]?: Currency } = {
-    [Field.INPUT]: inputCurrency ?? undefined,
-    [Field.OUTPUT]: outputCurrency ?? undefined,
+  const currencies: { [field in Field]: Currency } = {
+    [Field.INPUT]: inputCurrency  undefined,
+    [Field.OUTPUT]: outputCurrency  undefined,
   }
 
   // get link to trade on v1, if a better rate exists
@@ -164,22 +164,22 @@ export function useDerivedSwapInfo(): {
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? 'Enter an amount'
+    inputError = inputError  'Enter an amount'
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
-    inputError = inputError ?? 'Select a token'
+    inputError = inputError  'Select a token'
   }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
-    inputError = inputError ?? 'Enter a recipient'
+    inputError = inputError  'Enter a recipient'
   } else if (
     BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
     (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
     (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
   ) {
-    inputError = inputError ?? 'Invalid recipient'
+    inputError = inputError  'Invalid recipient'
   }
 
   const [allowedSlippage] = useUserSlippageTolerance()
@@ -193,11 +193,11 @@ export function useDerivedSwapInfo(): {
   const [balanceIn, amountIn] = [
     currencyBalances[Field.INPUT],
     toggledVersion === Version.v1
-      ? slippageAdjustedAmountsV1
-        ? slippageAdjustedAmountsV1[Field.INPUT]
+       slippageAdjustedAmountsV1
+         slippageAdjustedAmountsV1[Field.INPUT]
         : null
       : slippageAdjustedAmounts
-      ? slippageAdjustedAmounts[Field.INPUT]
+       slippageAdjustedAmounts[Field.INPUT]
       : null,
   ]
 
@@ -209,7 +209,7 @@ export function useDerivedSwapInfo(): {
     currencies,
     currencyBalances,
     parsedAmount,
-    v2Trade: v2Trade ?? undefined,
+    v2Trade: v2Trade  undefined,
     inputError,
     v1Trade,
   }
@@ -222,19 +222,19 @@ function parseCurrencyFromURLParameter(urlParam: any): string {
     if (urlParam.toUpperCase() === 'ETH') return 'ETH'
     if (valid === false) return 'ETH'
   }
-  return 'ETH' ?? ''
+  return 'ETH'  ''
 }
 
 function parseTokenAmountURLParameter(urlParam: any): string {
   // eslint-disable-next-line no-restricted-globals
-  return typeof urlParam === 'string' && !isNaN(parseFloat(urlParam)) ? urlParam : ''
+  return typeof urlParam === 'string' && !isNaN(parseFloat(urlParam))  urlParam : ''
 }
 
 function parseIndependentFieldURLParameter(urlParam: any): Field {
-  return typeof urlParam === 'string' && urlParam.toLowerCase() === 'output' ? Field.OUTPUT : Field.INPUT
+  return typeof urlParam === 'string' && urlParam.toLowerCase() === 'output'  Field.OUTPUT : Field.INPUT
 }
 
-const ENS_NAME_REGEX = /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)?$/
+const ENS_NAME_REGEX = /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$/
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
 function validatedRecipient(recipient: any): string | null {
   if (typeof recipient !== 'string') return null
