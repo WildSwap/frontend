@@ -9,8 +9,8 @@ import QuestionHelper from '../QuestionHelper'
 import { AutoRow } from '../Row'
 import CurrencyLogo from '../CurrencyLogo'
 
-const BaseWrapper = styled.div<{ disable?: boolean }>`
-  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.tertiary)};
+const BaseWrapper = styled.div<{ disable: boolean }>`
+  border: 1px solid ${({ theme, disable }) => (disable  'transparent' : theme.colors.tertiary)};
   border-radius: 10px;
   display: flex;
   padding: 6px;
@@ -30,8 +30,8 @@ export default function CommonBases({
   onSelect,
   selectedCurrency
 }: {
-  chainId?: ChainId
-  selectedCurrency?: Currency | null
+  chainId: ChainId
+  selectedCurrency: Currency | null
   onSelect: (currency: Currency) => void
 }) {
   return (
@@ -52,7 +52,7 @@ export default function CommonBases({
           <CurrencyLogo currency={ETHER} style={{ marginRight: 8 }} />
           <Text>BNB</Text>
         </BaseWrapper>
-        {(chainId ? SUGGESTED_BASES[chainId] : []).map((token: Token) => {
+        {(chainId  SUGGESTED_BASES[chainId] : []).map((token: Token) => {
           const selected = selectedCurrency instanceof Token && selectedCurrency.address === token.address
           return (
             <BaseWrapper onClick={() => !selected && onSelect(token)} disable={selected} key={token.address}>
