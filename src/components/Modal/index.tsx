@@ -67,10 +67,10 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
 interface ModalProps {
   isOpen: boolean
   onDismiss: () => void
-  minHeight?: number | false
-  maxHeight?: number
-  initialFocusRef?: React.RefObject<any>
-  children?: React.ReactNode
+  minHeight: number | false
+  maxHeight: number
+  initialFocusRef: React.RefObject<any>
+  children: React.ReactNode
 }
 
 export default function Modal({
