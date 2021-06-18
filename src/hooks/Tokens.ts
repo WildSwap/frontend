@@ -43,16 +43,16 @@ export function useIsUserAddedToken(currency: Currency): boolean {
 const BYTES32_REGEX = /^0x[a-fA-F0-9]{64}$/
 function parseStringOrBytes32(str: string | undefined, bytes32: string | undefined, defaultValue: string): string {
   return str && str.length > 0
-    ? str
+     str
     : bytes32 && BYTES32_REGEX.test(bytes32)
-    ? parseBytes32String(bytes32)
+     parseBytes32String(bytes32)
     : defaultValue
 }
 
 // undefined if invalid or does not exist
 // null if loading
 // otherwise returns the token
-export function useToken(tokenAddress?: string): Token | undefined | null {
+export function useToken(tokenAddress: string): Token | undefined | null {
   const { chainId } = useActiveWeb3React()
   const tokens = useAllTokens()
 
@@ -60,18 +60,18 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
 
   const tokenContract = useTokenContract(address || undefined, false)
   const tokenContractBytes32 = useBytes32TokenContract(address || undefined, false)
-  const token: Token | undefined = address ? tokens[address] : undefined
+  const token: Token | undefined = address  tokens[address] : undefined
 
-  const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
+  const tokenName = useSingleCallResult(token  undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
   const tokenNameBytes32 = useSingleCallResult(
-    token ? undefined : tokenContractBytes32,
+    token  undefined : tokenContractBytes32,
     'name',
     undefined,
     NEVER_RELOAD
   )
-  const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
-  const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
-  const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
+  const symbol = useSingleCallResult(token  undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
+  const symbolBytes32 = useSingleCallResult(token  undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
+  const decimals = useSingleCallResult(token  undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
 
   return useMemo(() => {
     if (token) return token
@@ -82,8 +82,8 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
         chainId,
         address,
         decimals.result[0],
-        parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
-        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
+        parseStringOrBytes32(symbol.result.[0], symbolBytes32.result.[0], 'UNKNOWN'),
+        parseStringOrBytes32(tokenName.result.[0], tokenNameBytes32.result.[0], 'Unknown Token')
       )
     }
     return undefined
@@ -103,7 +103,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
 }
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
-  const isETH = currencyId?.toUpperCase() === 'ETH'
-  const token = useToken(isETH ? undefined : currencyId)
-  return isETH ? ETHER : token
+  const isETH = currencyId.toUpperCase() === 'ETH'
+  const token = useToken(isETH  undefined : currencyId)
+  return isETH  ETHER : token
 }
