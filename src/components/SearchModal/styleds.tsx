@@ -34,7 +34,7 @@ export const MenuItem = styled(RowBetween)`
   :hover {
     background-color: ${({ theme, disabled }) => !disabled && theme.colors.invertedContrast};
   }
-  opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
+  opacity: ${({ disabled, selected }) => (disabled || selected  0.5 : 1)};
 `
 
 export const SearchInput = styled.input`
