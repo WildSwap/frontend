@@ -21,7 +21,7 @@ const currentTimestamp = () => new Date().getTime()
 
 export interface UserState {
   // the timestamp of the last updateVersion action
-  lastUpdateVersionTimestamp?: number
+  lastUpdateVersionTimestamp: number
 
   userDarkMode: boolean | null // the user's choice for dark mode or light mode
   matchesDarkMode: boolean // whether the dark mode media query matches
