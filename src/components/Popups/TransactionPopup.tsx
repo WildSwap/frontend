@@ -19,8 +19,8 @@ export default function TransactionPopup({
   summary,
 }: {
   hash: string
-  success?: boolean
-  summary?: string
+  success: boolean
+  summary: string
 }) {
   const { chainId } = useActiveWeb3React()
 
@@ -36,7 +36,7 @@ export default function TransactionPopup({
         )}
       </div>
       <AutoColumn gap="8px">
-        <Body fontWeight={500}>{summary ?? `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}</Body>
+        <Body fontWeight={500}>{summary  `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}</Body>
         {chainId && <ExternalLink href={getEtherscanLink(chainId, hash, 'transaction')}>View on bscscan</ExternalLink>}
       </AutoColumn>
     </RowNoFlex>
