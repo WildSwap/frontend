@@ -39,21 +39,21 @@ const EMPTY_LIST: TokenAddressMap = {
 }
 
 const listCache: WeakMap<TokenList, TokenAddressMap> | null =
-  typeof WeakMap !== 'undefined' ? new WeakMap<TokenList, TokenAddressMap>() : null
+  typeof WeakMap !== 'undefined'  new WeakMap<TokenList, TokenAddressMap>() : null
 
 export function listToTokenMap(list: TokenList): TokenAddressMap {
-  const result = listCache?.get(list)
+  const result = listCache.get(list)
   if (result) return result
 
   const map = list.tokens.reduce<TokenAddressMap>(
     (tokenMap, tokenInfo) => {
       const tags: TagInfo[] =
         tokenInfo.tags
-          ?.map(tagId => {
-            if (!list.tags?.[tagId]) return undefined
+          .map(tagId => {
+            if (!list.tags.[tagId]) return undefined
             return { ...list.tags[tagId], id: tagId }
           })
-          ?.filter((x): x is TagInfo => Boolean(x)) ?? []
+          .filter((x): x is TagInfo => Boolean(x))  []
       const token = new WrappedTokenInfo(tokenInfo, tags)
       if (tokenMap[token.chainId][token.address] !== undefined) throw Error('Duplicate tokens.')
       return {
@@ -66,7 +66,7 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
     },
     { ...EMPTY_LIST }
   )
-  listCache?.set(list, map)
+  listCache.set(list, map)
   return map
 }
 
@@ -74,7 +74,7 @@ export function useTokenList(url: string | undefined): TokenAddressMap {
   const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
   return useMemo(() => {
     if (!url) return EMPTY_LIST
-    const current = lists[url]?.current
+    const current = lists[url].current
     if (!current) return EMPTY_LIST
     try {
       return listToTokenMap(current)
@@ -96,11 +96,11 @@ export function useSelectedTokenList(): TokenAddressMap {
 export function useSelectedListInfo(): { current: TokenList | null; pending: TokenList | null; loading: boolean } {
   const selectedUrl = useSelectedListUrl()
   const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
-  const list = selectedUrl ? listsByUrl[selectedUrl] : undefined
+  const list = selectedUrl  listsByUrl[selectedUrl] : undefined
   return {
-    current: list?.current ?? null,
-    pending: list?.pendingUpdate ?? null,
-    loading: list?.loadingRequestId !== null
+    current: list.current  null,
+    pending: list.pendingUpdate  null,
+    loading: list.loadingRequestId !== null
   }
 }
 
