@@ -31,10 +31,10 @@ const { main: Main } = TYPE
 interface CurrencySearchProps {
   isOpen: boolean
   onDismiss: () => void
-  selectedCurrency?: Currency | null
+  selectedCurrency: Currency | null
   onCurrencySelect: (currency: Currency) => void
-  otherSelectedCurrency?: Currency | null
-  showCommonBases?: boolean
+  otherSelectedCurrency: Currency | null
+  showCommonBases: boolean
   onChangeList: () => void
 }
 
@@ -70,7 +70,7 @@ export function CurrencySearch({
   const audioPlay = useSelector<AppState, AppState['user']['audioPlay']>((state) => state.user.audioPlay)
 
   const filteredTokens: Token[] = useMemo(() => {
-    if (isAddressSearch) return searchToken ? [searchToken] : []
+    if (isAddressSearch) return searchToken  [searchToken] : []
     return filterTokens(Object.values(allTokens), searchQuery)
   }, [isAddressSearch, searchToken, allTokens, searchQuery])
 
@@ -84,10 +84,10 @@ export function CurrencySearch({
     if (symbolMatch.length > 1) return sorted
 
     return [
-      ...(searchToken ? [searchToken] : []),
+      ...(searchToken  [searchToken] : []),
       // sort any exact symbol matches first
-      ...sorted.filter((token) => token.symbol?.toLowerCase() === symbolMatch[0]),
-      ...sorted.filter((token) => token.symbol?.toLowerCase() !== symbolMatch[0]),
+      ...sorted.filter((token) => token.symbol.toLowerCase() === symbolMatch[0]),
+      ...sorted.filter((token) => token.symbol.toLowerCase() !== symbolMatch[0]),
     ]
   }, [filteredTokens, searchQuery, searchToken, tokenComparator])
 
@@ -116,7 +116,7 @@ export function CurrencySearch({
     const input = event.target.value
     const checksummedInput = isAddress(input)
     setSearchQuery(checksummedInput || input)
-    fixedList.current?.scrollTo(0)
+    fixedList.current.scrollTo(0)
   }, [])
 
   const handleEnter = useCallback(
@@ -127,7 +127,7 @@ export function CurrencySearch({
           handleCurrencySelect(ETHER)
         } else if (filteredSortedTokens.length > 0) {
           if (
-            filteredSortedTokens[0].symbol?.toLowerCase() === searchQuery.trim().toLowerCase() ||
+            filteredSortedTokens[0].symbol.toLowerCase() === searchQuery.trim().toLowerCase() ||
             filteredSortedTokens.length === 1
           ) {
             handleCurrencySelect(filteredSortedTokens[0])
@@ -198,9 +198,9 @@ export function CurrencySearch({
           <Separator />
           <Card>
             <RowBetween>
-              {selectedListInfo.current ? (
+              {selectedListInfo.current  (
                 <Row>
-                  {selectedListInfo.current.logoURI ? (
+                  {selectedListInfo.current.logoURI  (
                     <ListLogo
                       style={{ marginRight: 12 }}
                       logoURI={selectedListInfo.current.logoURI}
@@ -215,7 +215,7 @@ export function CurrencySearch({
                 onClick={onChangeList}
                 id="currency-search-change-list-button"
               >
-                {selectedListInfo.current ? 'Change' : 'Select a list'}
+                {selectedListInfo.current  'Change' : 'Select a list'}
               </LinkStyledButton>
             </RowBetween>
           </Card>
