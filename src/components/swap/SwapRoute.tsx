@@ -31,7 +31,7 @@ export default memo(function SwapRoute({ trade }: { trade: Trade }) {
                 {token.symbol}
               </Black>
             </Flex>
-            {isLastItem ? null : <ChevronRight color={theme.colors.textSubtle} />}
+            {isLastItem  null : <ChevronRight color={theme.colors.textSubtle} />}
           </Fragment>
         )
       })}
