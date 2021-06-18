@@ -27,13 +27,13 @@ const { error: Error } = TYPE
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   padding: 0;
   font-size: 1rem;
-  opacity: ${({ disabled }) => (disabled ? '0.4' : '1')};
+  opacity: ${({ disabled }) => (disabled  '0.4' : '1')};
 `
 
 const PopoverContainer = styled.div<{ show: boolean }>`
   z-index: 100;
-  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  opacity: ${(props) => (props.show ? 1 : 0)};
+  visibility: ${(props) => (props.show  'visible' : 'hidden')};
+  opacity: ${(props) => (props.show  1 : 0)};
   transition: visibility 150ms linear, opacity 150ms linear;
   background: ${({ theme }) => theme.colors.invertedContrast};
   border: 1px solid ${({ theme }) => theme.colors.tertiary};
@@ -67,7 +67,7 @@ const StyledListUrlText = styled.div`
 `
 
 function ListOrigin({ listUrl }: { listUrl: string }) {
-  const ensName = useMemo(() => parseENSAddress(listUrl)?.ensName, [listUrl])
+  const ensName = useMemo(() => parseENSAddress(listUrl).ensName, [listUrl])
   const host = useMemo(() => {
     if (ensName) return undefined
     const lowerListUrl = listUrl.toLowerCase()
@@ -81,7 +81,7 @@ function ListOrigin({ listUrl }: { listUrl: string }) {
       return undefined
     }
   }, [listUrl, ensName])
-  return <>{ensName ?? host}</>
+  return <>{ensName  host}</>
 }
 
 function listUrlRowHTMLId(listUrl: string) {
@@ -107,7 +107,7 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
     modifiers: [{ name: 'offset', options: { offset: [8, 8] } }],
   })
 
-  useOnClickOutside(node, open ? toggle : undefined)
+  useOnClickOutside(node, open  toggle : undefined)
 
   const selectThisList = useCallback(() => {
     if (isSelected) return
@@ -131,7 +131,7 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
 
   return (
     <Row key={listUrl} align="center" padding="16px" id={listUrlRowHTMLId(listUrl)}>
-      {list.logoURI ? (
+      {list.logoURI  (
         <ListLogo style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
       ) : (
         <div style={{ width: '24px', height: '24px', marginRight: '1rem' }} />
@@ -180,7 +180,7 @@ const ListRow = memo(function ListRow({ listUrl, onBack }: { listUrl: string; on
           </PopoverContainer>
         )}
       </StyledMenu>
-      {isSelected ? (
+      {isSelected  (
         <Button disabled style={{ width: '5rem', minWidth: '5rem' }}>
           Selected
         </Button>
@@ -212,7 +212,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
 
   const dispatch = useDispatch<AppDispatch>()
   const lists = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
-  const adding = Boolean(lists[listUrlInput]?.loadingRequestId)
+  const adding = Boolean(lists[listUrlInput].loadingRequestId)
   const [addError, setAddError] = useState<string | null>(null)
 
   const handleInput = useCallback((e) => {
@@ -258,9 +258,9 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
         const { current: l2 } = lists[u2]
         if (l1 && l2) {
           return l1.name.toLowerCase() < l2.name.toLowerCase()
-            ? -1
+             -1
             : l1.name.toLowerCase() === l2.name.toLowerCase()
-            ? 0
+             0
             : 1
         }
         if (l1) return -1
@@ -302,7 +302,7 @@ export function ListSelect({ onDismiss, onBack }: { onDismiss: () => void; onBac
             Add
           </Button>
         </Row>
-        {addError ? (
+        {addError  (
           <Error title={addError} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }} error>
             {addError}
           </Error>
