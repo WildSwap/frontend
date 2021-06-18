@@ -54,7 +54,7 @@ export default function SwapModalHeader({
           <CurrencyLogo currency={trade.inputAmount.currency} size="24px" style={{ marginRight: '12px' }} />
           <Text
             fontSize="24px"
-            color={showAcceptChanges && trade.tradeType === TradeType.EXACT_OUTPUT ? theme.colors.primary : 'text'}
+            color={showAcceptChanges && trade.tradeType === TradeType.EXACT_OUTPUT  theme.colors.primary : 'text'}
           >
             {trade.inputAmount.toSignificant(6)}
           </Text>
@@ -76,9 +76,9 @@ export default function SwapModalHeader({
             style={{ marginLeft: '10px', fontWeight: 500 }}
             color={
               priceImpactSeverity > 2
-                ? theme.colors.failure
+                 theme.colors.failure
                 : showAcceptChanges && trade.tradeType === TradeType.EXACT_INPUT
-                ? theme.colors.primary
+                 theme.colors.primary
                 : 'text'
             }
           >
@@ -91,7 +91,7 @@ export default function SwapModalHeader({
           </Text>
         </RowFixed>
       </RowBetween>
-      {showAcceptChanges ? (
+      {showAcceptChanges  (
         <SwapShowAcceptChanges justify="flex-start" gap="0px">
           <RowBetween>
             <RowFixed>
@@ -103,11 +103,11 @@ export default function SwapModalHeader({
         </SwapShowAcceptChanges>
       ) : null}
       <AutoColumn justify="flex-start" gap="sm" style={{ padding: '16px 0 0' }}>
-        {trade.tradeType === TradeType.EXACT_INPUT ? (
+        {trade.tradeType === TradeType.EXACT_INPUT  (
           <PriceInfoText>
             {`Output is estimated. You will receive at least `}
             <span>
-              {slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)} {trade.outputAmount.currency.symbol}
+              {slippageAdjustedAmounts[Field.OUTPUT].toSignificant(6)} {trade.outputAmount.currency.symbol}
             </span>
             {' or the transaction will revert.'}
           </PriceInfoText>
@@ -115,17 +115,17 @@ export default function SwapModalHeader({
           <PriceInfoText>
             {`Input is estimated. You will sell at most `}
             <span>
-              {slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)} {trade.inputAmount.currency.symbol}
+              {slippageAdjustedAmounts[Field.INPUT].toSignificant(6)} {trade.inputAmount.currency.symbol}
             </span>
             {' or the transaction will revert.'}
           </PriceInfoText>
         )}
       </AutoColumn>
-      {recipient !== null ? (
+      {recipient !== null  (
         <AutoColumn justify="flex-start" gap="sm" style={{ padding: '16px 0 0' }}>
           <Main>
             Output will be sent to{' '}
-            <b title={recipient}>{isAddress(recipient) ? shortenAddress(recipient) : recipient}</b>
+            <b title={recipient}>{isAddress(recipient)  shortenAddress(recipient) : recipient}</b>
           </Main>
         </AutoColumn>
       ) : null}
