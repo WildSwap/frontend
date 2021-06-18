@@ -4,9 +4,9 @@ import { HelpCircle } from 'react-feather'
 const BAD_SRCS: { [tokenAddress: string]: true } = {}
 
 export interface LogoProps {
-  alt?: string
-  style?: any
-  className?: string
+  alt: string
+  style: any
+  className: string
   srcs: string[]
 }
 
