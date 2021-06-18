@@ -32,7 +32,7 @@ export const HoverCard = styled(Card)`
 interface PositionCardProps {
   pair: Pair
   // eslint-disable-next-line react/no-unused-prop-types
-  showUnwrapped?: boolean
+  showUnwrapped: boolean
 }
 
 export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCardProps) {
@@ -52,7 +52,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
     !!userPoolBalance &&
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
     JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
-      ? [
+       [
           pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
           pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
         ]
@@ -138,7 +138,7 @@ export default function FullPositionCard({ pair }: PositionCardProps) {
     !!userPoolBalance &&
     // this condition is a short-circuit in the case where useTokenBalance updates sooner than useTotalSupply
     JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
-      ? [
+       [
           pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
           pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
         ]
@@ -191,11 +191,11 @@ export default function FullPositionCard({ pair }: PositionCardProps) {
             </FixedHeightRow>
             <FixedHeightRow>
               <Text>Your pool tokens:</Text>
-              <Text>{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
+              <Text>{userPoolBalance userPoolBalance.toSignificant(4) : '-'}</Text>
             </FixedHeightRow>
             <FixedHeightRow>
               <Text>Your pool share:</Text>
-              <Text>{poolTokenPercentage ? `${poolTokenPercentage.toFixed(2)}%` : '-'}</Text>
+              <Text>{poolTokenPercentage `${poolTokenPercentage.toFixed(2)}%` : '-'}</Text>
             </FixedHeightRow>
 
             <RowBetween marginTop="10px">
