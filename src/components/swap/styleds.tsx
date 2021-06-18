@@ -14,7 +14,7 @@ export const ArrowWrapper = styled.div<{ clickable: boolean }>`
 
   ${({ clickable }) =>
     clickable
-      ? css`
+       css`
           :hover {
             cursor: pointer;
             opacity: 0.8;
@@ -33,14 +33,14 @@ export const BottomGrouping = styled.div`
   margin-top: 1rem;
 `
 
-export const ErrorText = styled(Text)<{ severity?: 0 | 1 | 2 | 3 | 4 }>`
+export const ErrorText = styled(Text)<{ severity: 0 | 1 | 2 | 3 | 4 }>`
   color: ${({ theme, severity }) =>
     severity === 3 || severity === 4
-      ? theme.colors.failure
+       theme.colors.failure
       : severity === 2
-      ? theme.colors.binance
+       theme.colors.binance
       : severity === 1
-      ? theme.colors.text
+       theme.colors.text
       : theme.colors.success};
 `
 
