@@ -6,7 +6,7 @@ import { SendReturnResult, SendReturn, Send, SendOld } from './types'
 
 function parseSendReturn(sendReturn: SendReturnResult | SendReturn): any {
   // eslint-disable-next-line no-prototype-builtins
-  return sendReturn.hasOwnProperty('result') ? sendReturn.result : sendReturn
+  return sendReturn.hasOwnProperty('result')  sendReturn.result : sendReturn
 }
 
 export class NoBscProviderError extends Error {
@@ -90,7 +90,7 @@ export class BscConnector extends AbstractConnector {
       account = await window.BinanceChain.enable().then((sendReturn) => sendReturn && parseSendReturn(sendReturn)[0])
     }
 
-    return { provider: window.BinanceChain, ...(account ? { account } : {}) }
+    return { provider: window.BinanceChain, ...(account  { account } : {}) }
   }
 
   public async getProvider(): Promise<any> {
