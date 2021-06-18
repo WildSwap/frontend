@@ -74,12 +74,12 @@ export function getSigner(library: Web3Provider, account: string): JsonRpcSigner
 }
 
 // account is optional
-export function getProviderOrSigner(library: Web3Provider, account?: string): Web3Provider | JsonRpcSigner {
-  return account ? getSigner(library, account) : library
+export function getProviderOrSigner(library: Web3Provider, account: string): Web3Provider | JsonRpcSigner {
+  return account  getSigner(library, account) : library
 }
 
 // account is optional
-export function getContract(address: string, ABI: any, library: Web3Provider, account?: string): Contract {
+export function getContract(address: string, ABI: any, library: Web3Provider, account: string): Contract {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
@@ -88,7 +88,7 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 }
 
 // account is optional
-export function getRouterContract(_: number, library: Web3Provider, account?: string): Contract {
+export function getRouterContract(_: number, library: Web3Provider, account: string): Contract {
   return getContract(ROUTER_ADDRESS, IUniswapV2Router02ABI, library, account)
 }
 
@@ -96,7 +96,7 @@ export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
-export function isTokenOnList(defaultTokens: TokenAddressMap, currency?: Currency): boolean {
+export function isTokenOnList(defaultTokens: TokenAddressMap, currency: Currency): boolean {
   if (currency === ETHER) return true
-  return Boolean(currency instanceof Token && defaultTokens[currency.chainId]?.[currency.address])
+  return Boolean(currency instanceof Token && defaultTokens[currency.chainId].[currency.address])
 }
