@@ -41,7 +41,7 @@ export default async function getTokenList(
       console.error('Failed to translate contenthash to URI', contentHashUri)
       throw new Error(`Failed to translate contenthash to URI: ${contentHashUri}`)
     }
-    urls = uriToHttp(`${translatedUri}${parsedENS.ensPath ?? ''}`)
+    urls = uriToHttp(`${translatedUri}${parsedENS.ensPath ''}`)
   } else {
     urls = uriToHttp(listUrl)
   }
@@ -67,10 +67,10 @@ export default async function getTokenList(
     const json = await response.json()
     if (!tokenListValidator(json)) {
       const validationErrors: string =
-        tokenListValidator.errors?.reduce<string>((memo, error) => {
-          const add = `${error.dataPath} ${error.message ?? ''}`
-          return memo.length > 0 ? `${memo}; ${add}` : `${add}`
-        }, '') ?? 'unknown error'
+        tokenListValidator.errors.reduce<string>((memo, error) => {
+          const add = `${error.dataPath} ${error.message  ''}`
+          return memo.length > 0  `${memo}; ${add}` : `${add}`
+        }, '')  'unknown error'
       throw new Error(`Token list failed validation: ${validationErrors}`)
     }
     return json
