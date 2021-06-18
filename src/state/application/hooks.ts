@@ -7,7 +7,7 @@ import { AppState } from '../index'
 export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React()
 
-  return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
+  return useSelector((state: AppState) => state.application.blockNumber[chainId  -1])
 }
 
 export function useWalletModalOpen(): boolean {
@@ -29,11 +29,11 @@ export function useToggleSettingsMenu(): () => void {
 }
 
 // returns a function that allows adding a popup
-export function useAddPopup(): (content: PopupContent, key?: string) => void {
+export function useAddPopup(): (content: PopupContent, key: string) => void {
   const dispatch = useDispatch()
 
   return useCallback(
-    (content: PopupContent, key?: string) => {
+    (content: PopupContent, key: string) => {
       dispatch(addPopup({ content, key }))
     },
     [dispatch]
