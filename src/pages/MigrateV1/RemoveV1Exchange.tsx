@@ -42,24 +42,24 @@ function V1PairRemoval({
 }) {
   const { chainId } = useActiveWeb3React()
   const totalSupply = useTotalSupply(liquidityTokenAmount.token)
-  const exchangeETHBalance = useETHBalances([liquidityTokenAmount.token.address])?.[liquidityTokenAmount.token.address]
+  const exchangeETHBalance = useETHBalances([liquidityTokenAmount.token.address]).[liquidityTokenAmount.token.address]
   const exchangeTokenBalance = useTokenBalance(liquidityTokenAmount.token.address, token)
 
   const [confirmingRemoval, setConfirmingRemoval] = useState<boolean>(false)
   const [pendingRemovalHash, setPendingRemovalHash] = useState<string | null>(null)
 
-  const shareFraction: Fraction = totalSupply ? new Percent(liquidityTokenAmount.raw, totalSupply.raw) : ZERO_FRACTION
+  const shareFraction: Fraction = totalSupply  new Percent(liquidityTokenAmount.raw, totalSupply.raw) : ZERO_FRACTION
 
   const ethWorth: CurrencyAmount = exchangeETHBalance
-    ? CurrencyAmount.ether(exchangeETHBalance.multiply(shareFraction).multiply(WEI_DENOM).quotient)
+     CurrencyAmount.ether(exchangeETHBalance.multiply(shareFraction).multiply(WEI_DENOM).quotient)
     : CurrencyAmount.ether(ZERO)
 
   const tokenWorth: TokenAmount = exchangeTokenBalance
-    ? new TokenAmount(token, shareFraction.multiply(exchangeTokenBalance.raw).quotient)
+     new TokenAmount(token, shareFraction.multiply(exchangeTokenBalance.raw).quotient)
     : new TokenAmount(token, ZERO)
 
   const addTransaction = useTransactionAdder()
-  const isRemovalPending = useIsTransactionPending(pendingRemovalHash ?? undefined)
+  const isRemovalPending = useIsTransactionPending(pendingRemovalHash  undefined)
 
   const remove = useCallback(() => {
     if (!liquidityTokenAmount) return
@@ -74,7 +74,7 @@ function V1PairRemoval({
       )
       .then((response: TransactionResponse) => {
         addTransaction(response, {
-          summary: `Remove ${chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}/ETH V1 liquidity`,
+          summary: `Remove ${chainId && token.equals(WETH[chainId]) 'WETH' : token.symbol}/ETH V1 liquidity`,
         })
         setPendingRemovalHash(response.hash)
       })
@@ -104,17 +104,17 @@ function V1PairRemoval({
 
         <div style={{ display: 'flex', marginTop: '1rem' }}>
           <Button
-            variant={isSuccessfullyRemoved ? 'success' : 'primary'}
+            variant={isSuccessfullyRemoved  'success' : 'primary'}
             disabled={isSuccessfullyRemoved || noLiquidityTokens || isRemovalPending || confirmingRemoval}
             onClick={remove}
           >
-            {isSuccessfullyRemoved ? 'Success' : isRemovalPending ? <Dots>Removing</Dots> : 'Remove'}
+            {isSuccessfullyRemoved  'Success' : isRemovalPending  <Dots>Removing</Dots> : 'Remove'}
           </Button>
         </div>
       </LightCard>
       <DarkGray style={{ textAlign: 'center' }}>
         {`Your Uniswap V1 ${
-          chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol
+          chainId && token.equals(WETH[chainId])  'WETH' : token.symbol
         }/ETH liquidity will be redeemed for underlying assets.`}
       </DarkGray>
     </AutoColumn>
