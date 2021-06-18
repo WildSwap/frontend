@@ -98,10 +98,10 @@ const StyledRangeInput = styled.input<{ size: number }>`
 interface InputSliderProps {
   value: number
   onChange: (value: number) => void
-  step?: number
-  min?: number
-  max?: number
-  size?: number
+  step: number
+  min: number
+  max: number
+  size: number
 }
 
 export default function Slider({ value, onChange, min = 0, step = 1, max = 100, size = 28 }: InputSliderProps) {
