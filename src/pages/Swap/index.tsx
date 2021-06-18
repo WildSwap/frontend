@@ -46,14 +46,14 @@ const Swap = () => {
 
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
-    useCurrency(loadedUrlParams?.inputCurrencyId),
-    useCurrency(loadedUrlParams?.outputCurrencyId),
+    useCurrency(loadedUrlParams.inputCurrencyId),
+    useCurrency(loadedUrlParams.outputCurrencyId),
   ]
   const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(false)
   const [isSyrup, setIsSyrup] = useState<boolean>(false)
   const [syrupTransactionType, setSyrupTransactionType] = useState<string>('')
   const urlLoadedTokens: Token[] = useMemo(
-    () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
+    () => [loadedInputCurrency, loadedOutputCurrency].filter((c): c is Token => c instanceof Token)  [],
     [loadedInputCurrency, loadedOutputCurrency]
   )
   const handleConfirmTokenWarning = useCallback(() => {
@@ -93,7 +93,7 @@ const Swap = () => {
   //   const { address: recipientAddress } = useENSAddress(recipient)
   const toggledVersion = useToggledVersion()
   const trade = showWrap
-    ? undefined
+     undefined
     : {
         [Version.v1]: v1Trade,
         [Version.v2]: v2Trade,
@@ -101,24 +101,24 @@ const Swap = () => {
 
   const betterTradeLinkVersion: Version | undefined =
     toggledVersion === Version.v2 && isTradeBetter(v2Trade, v1Trade, BETTER_TRADE_LINK_THRESHOLD)
-      ? Version.v1
+       Version.v1
       : toggledVersion === Version.v1 && isTradeBetter(v1Trade, v2Trade)
-      ? Version.v2
+       Version.v2
       : undefined
 
   const parsedAmounts = showWrap
-    ? {
+     {
         [Field.INPUT]: parsedAmount,
         [Field.OUTPUT]: parsedAmount,
       }
     : {
-        [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
-        [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
+        [Field.INPUT]: independentField === Field.INPUT  parsedAmount : trade.inputAmount,
+        [Field.OUTPUT]: independentField === Field.OUTPUT  parsedAmount : trade.outputAmount,
       }
 
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
   const isValid = !swapInputError
-  const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
+  const dependentField: Field = independentField === Field.INPUT  Field.OUTPUT : Field.INPUT
 
   const handleTypeInput = useCallback(
     (value: string) => {
@@ -151,13 +151,13 @@ const Swap = () => {
   const formattedAmounts = {
     [independentField]: typedValue,
     [dependentField]: showWrap
-      ? parsedAmounts[independentField]?.toExact() ?? ''
-      : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
+       parsedAmounts[independentField].toExact()  ''
+      : parsedAmounts[dependentField].toSignificant(6)  '',
   }
 
-  const route = trade?.route
+  const route = trade.route
   const userHasSpecifiedInputOutput = Boolean(
-    currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+    currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField].greaterThan(JSBI.BigInt(0))
   )
   const noRoute = !route
 
@@ -175,7 +175,7 @@ const Swap = () => {
   }, [approval, approvalSubmitted])
 
   const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
-  const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
+  const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT].equalTo(maxAmountInput))
 
   // the callback to execute the swap
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(
@@ -315,7 +315,7 @@ const Swap = () => {
               <CurrencyInputPanel
                 label={
                   independentField === Field.OUTPUT && !showWrap && trade
-                    ? 'From (estimated)'
+                     'From (estimated)'
                     : TranslateString(76, 'From')
                 }
                 value={formattedAmounts[Field.INPUT]}
@@ -328,7 +328,7 @@ const Swap = () => {
                 id="swap-currency-input"
               />
               <AutoColumn justify="space-between">
-                <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
+                <AutoRow justify={isExpertMode  'space-between' : 'center'} style={{ padding: '0 1rem' }}>
                   <ArrowWrapper clickable>
                     <IconButton
                       variant="tertiary"
@@ -342,7 +342,7 @@ const Swap = () => {
                       <ArrowDownIcon color="primary" width="24px" />
                     </IconButton>
                   </ArrowWrapper>
-                  {recipient === null && !showWrap && isExpertMode ? (
+                  {recipient === null && !showWrap && isExpertMode  (
                     <LinkStyledButton id="add-recipient-button" onClick={() => onChangeRecipient('')}>
                       + Add a send (optional)
                     </LinkStyledButton>
@@ -353,7 +353,7 @@ const Swap = () => {
                 value={formattedAmounts[Field.OUTPUT]}
                 onUserInput={handleTypeOutput}
                 label={
-                  independentField === Field.INPUT && !showWrap && trade ? 'To (estimated)' : TranslateString(80, 'To')
+                  independentField === Field.INPUT && !showWrap && trade  'To (estimated)' : TranslateString(80, 'To')
                 }
                 showMaxButton={false}
                 currency={currencies[Field.OUTPUT]}
@@ -362,7 +362,7 @@ const Swap = () => {
                 id="swap-currency-output"
               />
 
-              {recipient !== null && !showWrap ? (
+              {recipient !== null && !showWrap  (
                 <>
                   <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
                     <ArrowWrapper clickable={false}>
@@ -376,14 +376,14 @@ const Swap = () => {
                 </>
               ) : null}
 
-              {showWrap ? null : (
+              {showWrap  null : (
                 <Card padding=".25rem .75rem 0 .75rem" borderRadius="20px">
                   <AutoColumn gap="4px">
                     {Boolean(trade) && (
                       <RowBetween align="center">
                         <Text fontSize="14px">Price</Text>
                         <TradePrice
-                          price={trade?.executionPrice}
+                          price={trade.executionPrice}
                           showInverted={showInverted}
                           setShowInverted={setShowInverted}
                         />
@@ -400,33 +400,33 @@ const Swap = () => {
               )}
             </AutoColumn>
             <BottomGrouping>
-              {!account ? (
+              {!account  (
                 <ConnectWalletButton fullWidth />
-              ) : showWrap ? (
+              ) : showWrap  (
                 <Button disabled={Boolean(wrapInputError)} onClick={onWrap} fullWidth>
-                  {wrapInputError ??
-                    (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
+                  {wrapInputError 
+                    (wrapType === WrapType.WRAP  'Wrap' : wrapType === WrapType.UNWRAP  'Unwrap' : null)}
                 </Button>
-              ) : noRoute && userHasSpecifiedInputOutput ? (
+              ) : noRoute && userHasSpecifiedInputOutput  (
                 <GreyCard style={{ textAlign: 'center' }}>
                   <Main mb="4px">Insufficient liquidity for this trade.</Main>
                 </GreyCard>
-              ) : showApproveFlow ? (
+              ) : showApproveFlow  (
                 <RowBetween>
                   <Button
                     onClick={approveCallback}
                     disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
                     style={{ width: '48%' }}
-                    variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
+                    variant={approval === ApprovalState.APPROVED  'success' : 'primary'}
                   >
-                    {approval === ApprovalState.PENDING ? (
+                    {approval === ApprovalState.PENDING  (
                       <AutoRow gap="6px" justify="center">
                         Approving <Loader stroke="white" />
                       </AutoRow>
-                    ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
+                    ) : approvalSubmitted && approval === ApprovalState.APPROVED  (
                       'Approved'
                     ) : (
-                      `Approve ${currencies[Field.INPUT]?.symbol}`
+                      `Approve ${currencies[Field.INPUT].symbol}`
                     )}
                   </Button>
                   <Button
@@ -448,11 +448,11 @@ const Swap = () => {
                     disabled={
                       !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
                     }
-                    variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
+                    variant={isValid && priceImpactSeverity > 2  'danger' : 'primary'}
                   >
                     {priceImpactSeverity > 3 && !isExpertMode
-                      ? `Price Impact High`
-                      : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
+                       `Price Impact High`
+                      : `Swap${priceImpactSeverity > 2  ' Anyway' : ''}`}
                   </Button>
                 </RowBetween>
               ) : (
@@ -472,17 +472,17 @@ const Swap = () => {
                   }}
                   id="swap-button"
                   disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
-                  variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
+                  variant={isValid && priceImpactSeverity > 2 && !swapCallbackError  'danger' : 'primary'}
                   fullWidth
                 >
                   {swapInputError ||
                     (priceImpactSeverity > 3 && !isExpertMode
-                      ? `Price Impact Too High`
-                      : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`)}
+                       `Price Impact Too High`
+                      : `Swap${priceImpactSeverity > 2  ' Anyway' : ''}`)}
                 </Button>
               )}
               {showApproveFlow && <ProgressSteps steps={[approval === ApprovalState.APPROVED]} />}
-              {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
+              {isExpertMode && swapErrorMessage  <SwapCallbackError error={swapErrorMessage} /> : null}
               {betterTradeLinkVersion && <BetterTradeLink version={betterTradeLinkVersion} />}
             </BottomGrouping>
           </CardBody>
