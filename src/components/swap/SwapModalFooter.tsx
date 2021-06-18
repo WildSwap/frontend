@@ -63,19 +63,19 @@ export default function SwapModalFooter({
         <RowBetween>
           <RowFixed>
             <Text fontSize="14px">
-              {trade.tradeType === TradeType.EXACT_INPUT ? 'Minimum received' : 'Maximum sold'}
+              {trade.tradeType === TradeType.EXACT_INPUT  'Minimum received' : 'Maximum sold'}
             </Text>
             <QuestionHelper text="Your transaction will revert if there is a large, unfavorable price movement before it is confirmed." />
           </RowFixed>
           <RowFixed>
             <Text fontSize="14px">
               {trade.tradeType === TradeType.EXACT_INPUT
-                ? slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4) ?? '-'
-                : slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4) ?? '-'}
+                 slippageAdjustedAmounts[Field.OUTPUT].toSignificant(4)  '-'
+                : slippageAdjustedAmounts[Field.INPUT].toSignificant(4)  '-'}
             </Text>
             <Text fontSize="14px" marginLeft="4px">
               {trade.tradeType === TradeType.EXACT_INPUT
-                ? trade.outputAmount.currency.symbol
+                 trade.outputAmount.currency.symbol
                 : trade.inputAmount.currency.symbol}
             </Text>
           </RowFixed>
@@ -93,7 +93,7 @@ export default function SwapModalFooter({
             <QuestionHelper text="For each trade a 0.2% fee is paid. 0.17% goes to liquidity providers and 0.03% goes to the PancakeSwap treasury." />
           </RowFixed>
           <Text fontSize="14px">
-            {realizedLPFee ? `${realizedLPFee?.toSignificant(6)  } ${  trade.inputAmount.currency.symbol}` : '-'}
+            {realizedLPFee  `${realizedLPFee.toSignificant(6)  } ${  trade.inputAmount.currency.symbol}` : '-'}
           </Text>
         </RowBetween>
       </AutoColumn>
@@ -107,10 +107,10 @@ export default function SwapModalFooter({
           id="confirm-swap-or-send"
           fullWidth
         >
-          {severity > 2 ? 'Swap Anyway' : 'Confirm Swap'}
+          {severity > 2  'Swap Anyway' : 'Confirm Swap'}
         </Button>
 
-        {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
+        {swapErrorMessage  <SwapCallbackError error={swapErrorMessage} /> : null}
       </AutoRow>
     </>
   )
