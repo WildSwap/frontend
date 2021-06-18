@@ -12,7 +12,7 @@ const NETWORK_URL = process.env.REACT_APP_NETWORK_URL
 const FORMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
 const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
 
-export const NETWORK_CHAIN_ID: number = parseInt(process.env.REACT_APP_CHAIN_ID ?? '1')
+export const NETWORK_CHAIN_ID: number = parseInt(process.env.REACT_APP_CHAIN_ID  '1')
 
 if (typeof NETWORK_URL === 'undefined') {
   throw new Error(`REACT_APP_NETWORK_URL must be a defined environment variable`)
@@ -25,7 +25,7 @@ export const network = new NetworkConnector({
 let networkLibrary: Web3Provider | undefined
 export function getNetworkLibrary(): Web3Provider {
   // eslint-disable-next-line no-return-assign
-  return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as any))
+  return (networkLibrary = networkLibrary  new Web3Provider(network.provider as any))
 }
 
 export const injected = new InjectedConnector({
@@ -44,13 +44,13 @@ export const walletconnect = new WalletConnectConnector({
 
 // mainnet only
 export const fortmatic = new FortmaticConnector({
-  apiKey: FORMATIC_KEY ?? '',
+  apiKey: FORMATIC_KEY  '',
   chainId: 1,
 })
 
 // mainnet only
 export const portis = new PortisConnector({
-  dAppId: PORTIS_ID ?? '',
+  dAppId: PORTIS_ID  '',
   networks: [1],
 })
 
