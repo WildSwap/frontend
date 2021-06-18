@@ -33,7 +33,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
  * Some tokens can only be swapped via certain pairs, so we override the list of bases that are considered for these
  * tokens.
  */
-export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } = {
+export const CUSTOM_BASES: { [chainId in ChainId]: { [tokenAddress: string]: Token[] } } = {
   [ChainId.MAINNET]: {
     [ETH.address]: [DAI, WETH[ChainId.MAINNET]]
   }
@@ -51,7 +51,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, BUSD, USDT]
 }
 
-export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
+export const PINNED_PAIRS: { readonly [chainId in ChainId]: [Token, Token][] } = {
   [ChainId.MAINNET]: [
     [
       new Token(ChainId.MAINNET, '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82', 18, 'CAKE', 'PancakeSwap Token'),
@@ -63,15 +63,15 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
 }
 
 export interface WalletInfo {
-  connector?: AbstractConnector
+  connector: AbstractConnector
   name: string
   iconName: string
   description: string
   href: string | null
   color: string
-  primary?: true
-  mobile?: true
-  mobileOnly?: true
+  primary: true
+  mobile: true
+  mobileOnly: true
 }
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
