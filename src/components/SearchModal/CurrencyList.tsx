@@ -20,7 +20,7 @@ import { isTokenOnList } from '../../utils'
 const { main: Main } = TYPE
 
 function currencyKey(currency: Currency): string {
-  return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : ''
+  return currency instanceof Token  currency.address : currency === ETHER  'ETHER' : ''
 }
 
 const StyledBalanceText = styled(Text)`
@@ -148,7 +148,7 @@ function CurrencyRow({
       </Column>
       <TokenTags currency={currency} />
       <RowFixed style={{ justifySelf: 'flex-end' }}>
-        {balance ? <Balance balance={balance} /> : account ? <Loader /> : null}
+        {balance ? <Balance balance={balance} /> : account  <Loader /> : null}
       </RowFixed>
     </MenuItem>
   )
@@ -165,10 +165,10 @@ export default function CurrencyList({
 }: {
   height: number
   currencies: Currency[]
-  selectedCurrency?: Currency | null
+  selectedCurrency: Currency | null
   onCurrencySelect: (currency: Currency) => void
-  otherCurrency?: Currency | null
-  fixedListRef?: MutableRefObject<FixedSizeList | undefined>
+  otherCurrency: Currency | null
+  fixedListRef: MutableRefObject<FixedSizeList | undefined>
   showETH: boolean
 }) {
   const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : [...currencies]), [currencies, showETH])
