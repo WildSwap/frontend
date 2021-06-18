@@ -9,11 +9,11 @@ import { ListSelect } from './ListSelect'
 interface CurrencySearchModalProps {
   isOpen: boolean
   onDismiss: () => void
-  selectedCurrency?: Currency | null
+  selectedCurrency: Currency | null
   onCurrencySelect: (currency: Currency) => void
-  otherSelectedCurrency?: Currency | null
+  otherSelectedCurrency: Currency | null
   // eslint-disable-next-line react/no-unused-prop-types
-  showCommonBases?: boolean
+  showCommonBases: boolean
 }
 
 export default function CurrencySearchModal({
@@ -51,10 +51,10 @@ export default function CurrencySearchModal({
   const noListSelected = !selectedListUrl
 
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90} minHeight={listView ? 40 : noListSelected ? 0 : 80}>
-      {listView ? (
+    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90} minHeight={listView  40 : noListSelected  0 : 80}>
+      {listView  (
         <ListSelect onDismiss={onDismiss} onBack={handleClickBack} />
-      ) : noListSelected ? (
+      ) : noListSelected  (
         <CurrencySearch
           isOpen={isOpen}
           onDismiss={onDismiss}
