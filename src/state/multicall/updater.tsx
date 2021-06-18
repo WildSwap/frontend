@@ -56,7 +56,7 @@ async function fetchChunk(
  */
 export function activeListeningKeys(
   allListeners: AppState['multicall']['callListeners'],
-  chainId?: number
+  chainId: number
 ): { [callKey: string]: number } {
   if (!allListeners || !chainId) return {}
   const listeners = allListeners[chainId]
@@ -145,8 +145,8 @@ export default function Updater(): null {
 
     const chunkedCalls = chunkArray(calls, CALL_CHUNK_SIZE)
 
-    if (cancellations.current?.blockNumber !== latestBlockNumber) {
-      cancellations.current?.cancellations?.forEach((c) => c())
+    if (cancellations.current.blockNumber !== latestBlockNumber) {
+      cancellations.current.cancellations.forEach((c) => c())
     }
 
     dispatch(
@@ -179,7 +179,7 @@ export default function Updater(): null {
                 results: outdatedCallKeys
                   .slice(firstCallKeyIndex, lastCallKeyIndex)
                   .reduce<{ [callKey: string]: string | null }>((memo, callKey, i) => {
-                    memo[callKey] = returnData[i] ?? null
+                    memo[callKey] = returnData[i]  null
                     return memo
                   }, {}),
                 blockNumber: fetchBlockNumber,
