@@ -49,7 +49,7 @@ export const NEVER_RELOAD: ListenerOptions = {
 }
 
 // the lowest level call for subscribing to contract data
-function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): CallResult[] {
+function useCallsData(calls: (Call | undefined)[], options: ListenerOptions): CallResult[] {
   const { chainId } = useActiveWeb3React()
   const callResults = useSelector<AppState, AppState['multicall']['callResults']>(
     (state) => state.multicall.callResults
@@ -60,9 +60,9 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
     () =>
       JSON.stringify(
         calls
-          ?.filter((c): c is Call => Boolean(c))
-          ?.map(toCallKey)
-          ?.sort() ?? []
+          .filter((c): c is Call => Boolean(c))
+          .map(toCallKey)
+          .sort()  []
       ),
     [calls]
   )
@@ -98,10 +98,10 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
       calls.map<CallResult>((call) => {
         if (!chainId || !call) return INVALID_RESULT
 
-        const result = callResults[chainId]?.[toCallKey(call)]
-        const data = result?.data && result?.data !== '0x' ? result.data : null
+        const result = callResults[chainId].[toCallKey(call)]
+        const data = result.data && result.data !== '0x'  result.data : null
 
-        return { valid: true, data, blockNumber: result?.blockNumber }
+        return { valid: true, data, blockNumber: result.blockNumber }
       }),
     [callResults, calls, chainId]
   )
@@ -134,7 +134,7 @@ function toCallState(
   if (valid && !blockNumber) return LOADING_CALL_STATE
   if (!contractInterface || !fragment || !latestBlockNumber) return LOADING_CALL_STATE
   const success = data && data.length > 2
-  const syncing = (blockNumber ?? 0) < latestBlockNumber
+  const syncing = (blockNumber  0) < latestBlockNumber
   let result: Result | undefined
   if (success && data) {
     try {
@@ -163,14 +163,14 @@ export function useSingleContractMultipleData(
   contract: Contract | null | undefined,
   methodName: string,
   callInputs: OptionalMethodInputs[],
-  options?: ListenerOptions
+  options: ListenerOptions
 ): CallState[] {
-  const fragment = useMemo(() => contract?.interface?.getFunction(methodName), [contract, methodName])
+  const fragment = useMemo(() => contract.interface.getFunction(methodName), [contract, methodName])
 
   const calls = useMemo(
     () =>
       contract && fragment && callInputs && callInputs.length > 0
-        ? callInputs.map<Call>((inputs) => {
+         callInputs.map<Call>((inputs) => {
             return {
               address: contract.address,
               callData: contract.interface.encodeFunctionData(fragment, inputs),
@@ -185,7 +185,7 @@ export function useSingleContractMultipleData(
   const latestBlockNumber = useBlockNumber()
 
   return useMemo(() => {
-    return results.map((result) => toCallState(result, contract?.interface, fragment, latestBlockNumber))
+    return results.map((result) => toCallState(result, contract.interface, fragment, latestBlockNumber))
   }, [fragment, contract, results, latestBlockNumber])
 }
 
@@ -193,14 +193,14 @@ export function useMultipleContractSingleData(
   addresses: (string | undefined)[],
   contractInterface: Interface,
   methodName: string,
-  callInputs?: OptionalMethodInputs,
-  options?: ListenerOptions
+  callInputs: OptionalMethodInputs,
+  options: ListenerOptions
 ): CallState[] {
   const fragment = useMemo(() => contractInterface.getFunction(methodName), [contractInterface, methodName])
   const callData: string | undefined = useMemo(
     () =>
       fragment && isValidMethodArgs(callInputs)
-        ? contractInterface.encodeFunctionData(fragment, callInputs)
+         contractInterface.encodeFunctionData(fragment, callInputs)
         : undefined,
     [callInputs, contractInterface, fragment]
   )
@@ -208,9 +208,9 @@ export function useMultipleContractSingleData(
   const calls = useMemo(
     () =>
       fragment && addresses && addresses.length > 0 && callData
-        ? addresses.map<Call | undefined>((address) => {
+         addresses.map<Call | undefined>((address) => {
             return address && callData
-              ? {
+               {
                   address,
                   callData,
                 }
@@ -232,14 +232,14 @@ export function useMultipleContractSingleData(
 export function useSingleCallResult(
   contract: Contract | null | undefined,
   methodName: string,
-  inputs?: OptionalMethodInputs,
-  options?: ListenerOptions
+  inputs: OptionalMethodInputs,
+  options: ListenerOptions
 ): CallState {
-  const fragment = useMemo(() => contract?.interface?.getFunction(methodName), [contract, methodName])
+  const fragment = useMemo(() => contract.interface.getFunction(methodName), [contract, methodName])
 
   const calls = useMemo<Call[]>(() => {
     return contract && fragment && isValidMethodArgs(inputs)
-      ? [
+       [
           {
             address: contract.address,
             callData: contract.interface.encodeFunctionData(fragment, inputs),
@@ -252,6 +252,6 @@ export function useSingleCallResult(
   const latestBlockNumber = useBlockNumber()
 
   return useMemo(() => {
-    return toCallState(result, contract?.interface, fragment, latestBlockNumber)
+    return toCallState(result, contract.interface, fragment, latestBlockNumber)
   }, [result, contract, fragment, latestBlockNumber])
 }
