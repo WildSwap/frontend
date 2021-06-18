@@ -21,15 +21,15 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
       <CardBody>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="14px">{isExactIn ? 'Minimum received' : 'Maximum sold'}</Text>
+            <Text fontSize="14px">{isExactIn  'Minimum received' : 'Maximum sold'}</Text>
             <QuestionHelper text="Your transaction will revert if there is a large, unfavorable price movement before it is confirmed." />
           </RowFixed>
           <RowFixed>
             <Text fontSize="14px">
               {isExactIn
-                ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${trade.outputAmount.currency.symbol}` ??
+                 `${slippageAdjustedAmounts[Field.OUTPUT].toSignificant(4)} ${trade.outputAmount.currency.symbol}` 
                   '-'
-                : `${slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)} ${trade.inputAmount.currency.symbol}` ??
+                : `${slippageAdjustedAmounts[Field.INPUT].toSignificant(4)} ${trade.inputAmount.currency.symbol}` 
                   '-'}
             </Text>
           </RowFixed>
@@ -48,7 +48,7 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
             <QuestionHelper text="For each trade a 0.2% fee is paid. 0.17% goes to liquidity providers and 0.03% goes to the PancakeSwap treasury." />
           </RowFixed>
           <Text fontSize="14px">
-            {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
+            {realizedLPFee  `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
           </Text>
         </RowBetween>
       </CardBody>
@@ -57,7 +57,7 @@ function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippag
 }
 
 export interface AdvancedSwapDetailsProps {
-  trade?: Trade
+  trade: Trade
 }
 
 export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
