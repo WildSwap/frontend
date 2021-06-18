@@ -23,8 +23,8 @@ export function RedirectToSwap(props: RouteComponentProps<{ outputCurrency: stri
         pathname: '/swap',
         search:
           search && search.length > 1
-            ? `${search}&outputCurrency=${outputCurrency}`
-            : `?outputCurrency=${outputCurrency}`,
+             `${search}&outputCurrency=${outputCurrency}`
+            : `outputCurrency=${outputCurrency}`,
       }}
     />
   )
